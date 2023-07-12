@@ -20,7 +20,7 @@ connectMongoDB();
 // app.set("view engine", "ejs");
 // app.use(express.urlencoded({ extended: false }));
 
-app.get("/", async (req, res) => {
+app.get("/shorturls", async (req, res) => {
   const shortUrls = await UrlShorts.find();
   
   res.json({
@@ -31,12 +31,20 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/shortUrls", async (req, res) => {
-  await UrlShorts.create ({ full: req.body.fullUrl });
+  const { full } = req.body;
+
+  const newTask = new UrlShorts({
+    full,
+  });
+
+  const savedfull = await newTask.save();
+  // await UrlShorts.create ({ full: req.body.fullUrl });
   // res.redirect("/");
 
   res.json({
     success: true,
     message: "shortsUrls saved successfully",
+    data: savedfull
   });
 });
 
@@ -65,6 +73,7 @@ app.put("/updateurl", async (req, res) => {
     });
   });
 
+  
 
 
 const PORT = process.env.PORT || 5000;
@@ -72,3 +81,37 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`The server is Running on Port ${PORT} 🚀`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
