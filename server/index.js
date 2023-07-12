@@ -17,17 +17,27 @@ async function connectMongoDB() {
 }
 connectMongoDB();
 
-app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: false }));
+// app.set("view engine", "ejs");
+// app.use(express.urlencoded({ extended: false }));
 
 app.get("/", async (req, res) => {
   const shortUrls = await UrlShorts.find();
-  res.render("index", { shortUrls: shortUrls });
+  
+  res.json({
+    success: true,
+    message: "all shortsUrls fetched successfully",
+    data:  shortUrls,
+  });
 });
 
 app.post("/shortUrls", async (req, res) => {
-  await UrlShorts.create({ full: req.body.fullUrl });
-  res.redirect("/");
+  await UrlShorts.create ({ full: req.body.fullUrl });
+  // res.redirect("/");
+
+  res.json({
+    success: true,
+    message: "shortsUrls saved successfully",
+  });
 });
 
 app.get("/:shortUrl", async (req, res) => {
