@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
 import UrlShorts from "./models/UrlShorts.js";
 
 const app = express();
@@ -17,16 +16,13 @@ async function connectMongoDB() {
 }
 connectMongoDB();
 
-// app.set("view engine", "ejs");
-// app.use(express.urlencoded({ extended: false }));
-
 app.get("/shorturls", async (req, res) => {
   const shortUrls = await UrlShorts.find();
-  
+
   res.json({
     success: true,
     message: "all shortsUrls fetched successfully",
-    data:  shortUrls,
+    data: shortUrls,
   });
 });
 
@@ -38,13 +34,11 @@ app.post("/shortUrls", async (req, res) => {
   });
 
   const savedfull = await newTask.save();
-  // await UrlShorts.create ({ full: req.body.fullUrl });
-  // res.redirect("/");
 
   res.json({
     success: true,
     message: "shortsUrls saved successfully",
-    data: savedfull
+    data: savedfull,
   });
 });
 
@@ -60,58 +54,34 @@ app.get("/:shortUrl", async (req, res) => {
 
 app.put("/updateurl", async (req, res) => {
   await UrlShorts.updateOne(
-      { _id: req.body.id },
-  
-      {
-        $set: req.body,
-      }
-    );
-  
-    res.json({
-      success: true,
-      message: "ShortUrl successfully updated...",
-    });
+    { _id: req.body.id },
+
+    {
+      $set: req.body,
+    }
+  );
+
+  res.json({
+    success: true,
+    message: "ShortUrl successfully updated...",
+  });
+});
+
+app.post("/url/delete", async(req, res)=>{
+  const { urlId } = req.body;
+
+  await UrlShorts.deleteOne({
+    _id:  urlId,
   });
 
-  
-
+  res.json({
+    success: true,
+    message: "URL Successfully Deleted",
+  });
+})
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`The server is Running on Port ${PORT} 🚀`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

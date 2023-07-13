@@ -1,0 +1,6 @@
+.url-container{
+    height: 350px;
+    overflow-y: scroll;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
