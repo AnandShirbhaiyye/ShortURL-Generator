@@ -65,12 +65,12 @@ function ShortUrl() {
                   
                     <span
                       className="delete-button"
-                      // onClick={() => {
-                      //   deleteTask(task?._id);
-                      // }}
+                      onClick={() => {
+                        deleteTask(link?._id);
+                      }}
                     >
                       {" "}
-                      🤗
+                      ❌
                     </span>
                   </div>
                 );

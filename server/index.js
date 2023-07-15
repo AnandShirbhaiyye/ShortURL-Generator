@@ -70,13 +70,15 @@ app.put("/updateurl", async (req, res) => {
 app.post("/url/delete", async(req, res)=>{
   const { urlId } = req.body;
 
-  await UrlShorts.deleteOne({
+  const delRes = await UrlShorts.deleteOne({
     _id:  urlId,
   });
 
+  const deleted = delRes?.deletedCount > 0 ; 
+
   res.json({
-    success: true,
-    message: "URL Successfully Deleted",
+    success: deleted,
+    message: deleted ? "URL Successfully Deleted" : "Something went wrong",
   });
 })
 
