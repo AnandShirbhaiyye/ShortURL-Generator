@@ -22,6 +22,14 @@ function ShortUrl() {
     alert(data?.message);
     setFull("");
   };
+
+  const deleteTask = async (urlId) => {
+    const { data } = await axios.post("/url/delete", {
+      urlId: urlId,
+    });
+    alert(data?.message);
+    loadTask();
+  };
   return (
     <>
       <div className="container">
@@ -60,8 +68,8 @@ function ShortUrl() {
                 {links.map((link) => {
                 return (
                   <div className="card shadow-sm p-1 mt-2">
-                    <p>Full URL : {link?.full}</p>
-                    <p>Short URL : {link?.short}</p>
+                    <p><b>Full URL :</b> {link?.full}</p>
+                    <p><b>Short URL : </b>{link?.short}</p>
                   
                     <span
                       className="delete-button"
