@@ -3,7 +3,7 @@ import "./ShortUrl.css";
 import axios from "axios";
 
 function ShortUrl() {
-  const [url, setUrl] = useState("");
+  const [full, setFull] = useState("");
 
   const [links, setLinks] = useState([]);
 
@@ -17,10 +17,10 @@ function ShortUrl() {
 
   const addUrl = async () => {
     const { data } = await axios.post("/shortUrls", {
-      url: url,
+      full: full,
     });
     alert(data?.message);
-    setUrl("");
+    setFull("");
   };
   return (
     <>
@@ -39,9 +39,9 @@ function ShortUrl() {
                       type="text"
                       className="form-control"
                       placeholder="Enter FullUrl"
-                      value={url}
+                      value={full}
                       onChange={(e) => {
-                        setUrl(e.target.value);
+                        setFull(e.target.value);
                       }}
                     />
                   </div>
@@ -60,17 +60,18 @@ function ShortUrl() {
                 {links.map((link) => {
                 return (
                   <div className="card shadow-sm p-1 mt-2">
-                    <h5>{link?.url}</h5>
-                    {/* <p>{link?.short}</p> */}
-                    {/* <span
+                    <p>Full URL : {link?.full}</p>
+                    <p>Short URL : {link?.short}</p>
+                  
+                    <span
                       className="delete-button"
-                      onClick={() => {
-                        deleteTask(task?._id);
-                      }}
+                      // onClick={() => {
+                      //   deleteTask(task?._id);
+                      // }}
                     >
                       {" "}
-                      ❌
-                    </span> */}
+                      🤗
+                    </span>
                   </div>
                 );
               })}
