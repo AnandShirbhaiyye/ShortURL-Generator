@@ -47,9 +47,10 @@ app.get("/:shortUrl", async (req, res) => {
   if (shortUrl == null) return res.sendStatus(404);
 
   shortUrl.clicks++;
-  shortUrl.save();
+ await shortUrl.save();
 
-  res.redirect(shortUrl.full);
+  // res.redirect(shortUrl.full);
+  res.json({ full: shortUrl.full, clicks: shortUrl.clicks });
 });
 
 app.put("/updateurl", async (req, res) => {
